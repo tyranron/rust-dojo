@@ -1,0 +1,6 @@
+[package]
+name = "my-dojo"
+version = "0.1.0"
+authors = ["tyranron <tyranron@gmail.com>"]
+
+[dependencies]
