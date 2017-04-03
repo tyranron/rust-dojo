@@ -26,7 +26,7 @@ fn iter_pi(epsilon: f64) -> (i32, f64) {
 
 #[cfg(test)]
 fn testing(epsilon: f64, exp: (i32, f64)) -> () {
-   assert_eq!(iter_pi(epsilon), exp)
+    assert_eq!(iter_pi(epsilon), exp)
 }
 
 #[test]
