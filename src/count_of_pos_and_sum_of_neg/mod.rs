@@ -5,7 +5,9 @@
 /// For given vec counts number of its positive items and sum of its negative
 /// items. The result is returned as two-items vec.
 fn count_positives_sum_negatives(input: Vec<i32>) -> Vec<i32> {
-    if input.is_empty() { return input }
+    if input.is_empty() {
+        return input;
+    }
     let (count, num) = input.iter()
         .fold((0, 0), |(count, num), &v| if v > 0 {
             (count + 1, num)
