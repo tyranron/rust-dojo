@@ -33,16 +33,41 @@ fn epidemic_funct(tm: i32, n: i32, s0: i32, i0: i32, b: f64, a: f64) -> i32 {
 }
 
 
-#[test]
-fn basic_tests_imper() {
-    assert_eq!(420, epidemic_imper(18, 432, 1004, 1, 0.00209, 0.51));
-    assert_eq!(461, epidemic_imper(12, 288, 1007, 2, 0.00206, 0.45));
-    assert_eq!(409, epidemic_imper(13, 312, 999, 1, 0.00221, 0.55));
+#[cfg(test)]
+mod spec {
+    use super::*;
+
+    #[test]
+    fn basic_tests_imper() {
+        assert_eq!(420, epidemic_imper(18, 432, 1004, 1, 0.00209, 0.51));
+        assert_eq!(461, epidemic_imper(12, 288, 1007, 2, 0.00206, 0.45));
+        assert_eq!(409, epidemic_imper(13, 312, 999, 1, 0.00221, 0.55));
+    }
+
+    #[test]
+    fn basic_tests_funct() {
+        assert_eq!(420, epidemic_funct(18, 432, 1004, 1, 0.00209, 0.51));
+        assert_eq!(461, epidemic_funct(12, 288, 1007, 2, 0.00206, 0.45));
+        assert_eq!(409, epidemic_funct(13, 312, 999, 1, 0.00221, 0.55));
+    }
 }
 
-#[test]
-fn basic_tests_funct() {
-    assert_eq!(420, epidemic_funct(18, 432, 1004, 1, 0.00209, 0.51));
-    assert_eq!(461, epidemic_funct(12, 288, 1007, 2, 0.00206, 0.45));
-    assert_eq!(409, epidemic_funct(13, 312, 999, 1, 0.00221, 0.55));
+
+#[cfg(test)]
+#[cfg(all(feature = "unstable", test))]
+mod bench {
+    extern crate test;
+
+    use super::*;
+    use self::test::Bencher;
+
+    #[bench]
+    fn bench_imper(b: &mut Bencher) {
+        b.iter(|| epidemic_imper(12, 288, 1007, 2, 0.00206, 0.45));
+    }
+
+    #[bench]
+    fn bench_funct(b: &mut Bencher) {
+        b.iter(|| epidemic_funct(12, 288, 1007, 2, 0.00206, 0.45));
+    }
 }
