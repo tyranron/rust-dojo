@@ -5,11 +5,14 @@
 /// Returns `n` that satisfies equation `n^3 + (n-1)^3 + ... + 1^3 = m`,
 /// or `-1` if such `n` does not exist.
 fn find_nb(m: u64) -> i32 {
+    let mut r = 0;
     for n in 1u64.. {
-        match (0..n).fold(0, |r, i| r + (n - i).pow(3)) {
-            r if r == m => return n as i32,
-            r if r > m => return -1,
-            _ => continue,
+        r += n.pow(3);
+        if r == m {
+            return n as i32;
+        }
+        if r > m {
+            return -1;
         }
     }
     unreachable!();
