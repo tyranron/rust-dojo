@@ -1,17 +1,31 @@
-fn find_nb(n: u64) -> i32 {
-    // your code
+//! Kata "Build a pile of Cubes":
+//! http://www.codewars.com/kata/5592e3bd57b64d00f3000047
+
+
+/// Returns `n` that satisfies equation `n^3 + (n-1)^3 + ... + 1^3 = m`,
+/// or `-1` if such `n` does not exist.
+fn find_nb(m: u64) -> i32 {
+    for n in 1u64.. {
+        match (0..n).fold(0, |r, i| r + (n - i).pow(3)) {
+            r if r == m => return n as i32,
+            r if r > m => return -1,
+            _ => continue,
+        }
+    }
+    unreachable!();
 }
 
 
-fn testing(n: u64, exp: i32) -> () {
-    assert_eq!(find_nb(n), exp);
-}
+#[cfg(test)]
+mod spec {
+    use super::*;
 
-#[test]
-fn basics_find_nb() {
-    testing(4183059834009, 2022);
-    testing(24723578342962, -1);
-    testing(135440716410000, 4824);
-    testing(40539911473216, 3568);
-    testing(26825883955641, 3218);
+    #[test]
+    fn basics_imper_find_nb() {
+        assert_eq!(find_nb(4183059834009), 2022);
+        assert_eq!(find_nb(24723578342962), -1);
+        assert_eq!(find_nb(135440716410000), 4824);
+        assert_eq!(find_nb(40539911473216), 3568);
+        assert_eq!(find_nb(26825883955641), 3218);
+    }
 }
